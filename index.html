@@ -1,92 +1,25 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu Site Pessoal</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f8ff; /* Azul claro */
-            color: #000000; /* Preto */
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        header {
-            width: 100%;
-            background-color: #00008b; /* Azul escuro */
-            color: #ffff00; /* Amarelo */
-            padding: 20px 0;
-            text-align: center;
-        }
-        main {
-            width: 80%;
-            max-width: 1200px;
-            margin: 20px 0;
-        }
-        section {
-            margin-bottom: 20px;
-        }
-        h1, h2, h3 {
-            margin: 0;
-        }
-        button {
-            background-color: #00008b; /* Azul escuro */
-            color: #ffff00; /* Amarelo */
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-        button:hover {
-            background-color: #ffff00; /* Amarelo */
-            color: #00008b; /* Azul escuro */
-        }
-    </style>
+    <title>Google Sign-In Example</title>
+    <!-- Incluir o SDK do Google Sign-In -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id" content="SEU_CLIENT_ID.apps.googleusercontent.com">
 </head>
 <body>
-    <header>
-        <h1>Meu Site Pessoal</h1>
-    </header>
-    <main>
-        <section>
-            <h2>Sobre Mim</h2>
-            <p>Olá! Bem-vindo ao meu site pessoal. Aqui você encontrará informações sobre meus projetos e como entrar em contato comigo.</p>
-        </section>
-        <section>
-            <h2>Webhook</h2>
-            <p>Clique no botão abaixo para enviar uma requisição para o webhook e controlar o outro site via API.</p>
-            <button id="webhookButton">Enviar Requisição</button>
-        </section>
-    </main>
-    <script>
-        document.getElementById('webhookButton').addEventListener('click', function() {
-            const url = 'https://seu-webhook-url.com/api'; // Substitua pela URL do seu webhook
-            const data = {
-                key1: 'value1',
-                key2: 'value2'
-            };
+    <!-- Botão de Login do Google Sign-In -->
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+    <p id="profile-info"></p>
 
-            fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert('Requisição enviada com sucesso!');
-                console.log('Success:', data);
-            })
-            .catch((error) => {
-                alert('Erro ao enviar a requisição.');
-                console.error('Error:', error);
-            });
-        });
+    <script>
+        function onSignIn(googleUser) {
+            var profile = googleUser.getBasicProfile();
+            document.getElementById('profile-info').innerHTML = 'Nome: ' + profile.getName() +
+                '<br>Email: ' + profile.getEmail() +
+                '<br>Imagem: <img src="' + profile.getImageUrl() + '">';
+        }
     </script>
 </body>
 </html>
